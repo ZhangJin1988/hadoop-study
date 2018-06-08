@@ -1,9 +1,5 @@
 package day02.cn.edu360.hdfs.datacollect;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URI;
@@ -12,6 +8,10 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.TimerTask;
 import java.util.UUID;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 
 /**
  * 采集任务

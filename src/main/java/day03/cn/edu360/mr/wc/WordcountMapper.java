@@ -1,11 +1,11 @@
 package day03.cn.edu360.mr.wc;
 
+import java.io.IOException;
+
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-
-import java.io.IOException;
 
 /**
  * KEYIN ：表示输入的KEY的类型，输入的KEY是maptask所读取到的一行文本的起始偏移量，long
@@ -34,7 +34,7 @@ public class WordcountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 	
 	// 谁会调这个map方法？ --》 map task程序
 	@Override
-	protected void map(LongWritable key, Text value, Context context)
+	protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
 			throws IOException, InterruptedException {
 
 		// 切分单词

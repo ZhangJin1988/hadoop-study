@@ -1,11 +1,11 @@
 package day02.cn.edu360.javase.iterator.liubei;
 
-import day02.cn.edu360.javase.iterator.zgl.Soldier;
-import day02.cn.edu360.javase.iterator.zgl.SoldierSet;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import day02.cn.edu360.javase.iterator.zgl.Soldier;
+import day02.cn.edu360.javase.iterator.zgl.SoldierSet;
 
 public class LiuBei {
 	

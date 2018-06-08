@@ -1,11 +1,11 @@
 package day02.cn.edu360.javase.io;
 
-import org.junit.Test;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+
+import org.junit.Test;
 
 public class DataOutputStreamDemo {
 	

@@ -6,21 +6,24 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class WordcountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
+/**
+ * map task调此类
+ * @author hunter.d
+ * @create_time 2018年4月14日
+ * @copyright www.edu360.cn
+ */
+public class WordcountCombiner extends Reducer<Text, IntWritable, Text, IntWritable>{
 	
-	// 谁调reduce方法？ --》 reduce task程序
-	// 它怎么调？ -->它对每一组key-value数据调一次
 	@Override
 	protected void reduce(Text key, Iterable<IntWritable> values,
 			Reducer<Text, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
-
-		int count = 0;
-		for (IntWritable value : values) {
-			count += value.get();
-		}
 		
+		int count = 0;
+		for (IntWritable v : values) {
+			count += v.get();
+		}
 		context.write(key, new IntWritable(count));
+		
 	}
-	
 
 }

@@ -1,5 +1,7 @@
 package day04.cn.edu360.mr.line;
 
+import java.io.IOException;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -11,15 +13,13 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import java.io.IOException;
-
 public class Line {
 	
 	public static class LineMapper extends Mapper<LongWritable, Text, IntWritable, IntWritable>{
 		
 		@Override
 		protected void map(LongWritable key, Text value,
-				Context context)
+				Mapper<LongWritable, Text, IntWritable, IntWritable>.Context context)
 				throws IOException, InterruptedException {
 			//1,4
 			String[] split = value.toString().split(",");
@@ -37,7 +37,7 @@ public class Line {
 		
 		@Override
 		protected void reduce(IntWritable key, Iterable<IntWritable> values,
-				Context context)
+				Reducer<IntWritable, IntWritable, IntWritable, IntWritable>.Context context)
 				throws IOException, InterruptedException {
 			
 			int count = 0;

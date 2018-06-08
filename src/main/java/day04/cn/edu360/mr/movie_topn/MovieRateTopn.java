@@ -1,11 +1,14 @@
 package day04.cn.edu360.mr.movie_topn;
 
+import java.io.IOException;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.InputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -13,15 +16,13 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.IOException;
-
 public class MovieRateTopn {
 
 	public static class MovieRateTopnMapper extends Mapper<LongWritable, Text, MovieBean, NullWritable> {
 
 		@Override
 		protected void map(LongWritable key, Text value,
-				Context context)
+				Mapper<LongWritable, Text, MovieBean, NullWritable>.Context context)
 				throws IOException, InterruptedException {
 
 			try {
@@ -40,7 +41,7 @@ public class MovieRateTopn {
 
 		@Override
 		protected void reduce(MovieBean key, Iterable<NullWritable> values,
-				Context context)
+				Reducer<MovieBean, NullWritable, MovieBean, NullWritable>.Context context)
 				throws IOException, InterruptedException {
 			int topn = 2;
 			for (NullWritable v : values) {
@@ -69,14 +70,16 @@ public class MovieRateTopn {
 		job.setMapOutputKeyClass(MovieBean.class);
 		job.setMapOutputValueClass(NullWritable.class);
 
-		FileInputFormat.setInputPaths(job, new Path("F:\\mrdata\\movie\\input"));
+		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		
 		// 判断输出目录是否已存在，如果已存在则删除
-		Path output = new Path("F:\\mrdata\\movie\\output");
+		Path output = new Path(args[1]);
 		FileSystem fs = FileSystem.get(conf);
 		if(fs.exists(output)) {
 			fs.delete(output, true);
 		}
+		
+		InputFormat in = null;
 		
 		FileOutputFormat.setOutputPath(job, output);
 

@@ -1,10 +1,10 @@
 package day04.cn.edu360.mr.order_topn;
 
-import org.apache.hadoop.io.Writable;
-
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+
+import org.apache.hadoop.io.Writable;
 
 public class OrderBean implements Writable{
 	

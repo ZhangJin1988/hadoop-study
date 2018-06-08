@@ -16,17 +16,15 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * @create_time 2018年4月11日
  * @copyright www.edu360.cn
  */
-public class JobClient {
+public class JobClient_linux_local {
 	public static void main(String[] args) throws Exception {
-		Configuration conf = new Configuration();
+		Configuration conf = new Configuration(); // 加载classpath中的hadoop配置文件
 		// job api对象，在提交mrjob去运行时，有两种提交目的地选择：1.本地模拟器  2.yarn
-		conf.set("mapreduce.framework.name", "yarn");  //  mapred-site.xml
-		conf.set("fs.defaultFS", "hdfs://cts01:9000/");  // core-site.xml
 		Job job = Job.getInstance(conf);
 		
 		// 封装本mr程序相关到信息到job对象中
 		//job.setJar("d:/wc.jar");
-		job.setJarByClass(JobClient.class);
+		job.setJarByClass(JobClient_linux_local.class);
 		
 		// 指定mapreduce程序用jar包中的哪个类作为Mapper逻辑类
 		job.setMapperClass(WordcountMapper.class);
@@ -42,16 +40,17 @@ public class JobClient {
 		job.setOutputValueClass(IntWritable.class);
 		
 		// 告诉mapreduce程序，我们的原始文件在哪里
-		FileInputFormat.setInputPaths(job, new Path("/wordcount/input/"));
+		FileInputFormat.setInputPaths(job, new Path("/root/wordcount/input/"));
 		// 告诉mapreduce程序，结果数据往哪里写
-		FileOutputFormat.setOutputPath(job, new Path("/wordcount/output/"));
+		FileOutputFormat.setOutputPath(job, new Path("/root/wordcount/output2/"));
 		
 		// 设置reduce task的运行实例数
 		job.setNumReduceTasks(2); // 默认是1
 		
 		// 调用job对象的方法来提交任务
-		job.submit();
-		
+		//job.submit();
+		boolean res = job.waitForCompletion(true);  // 阻塞方法
+		System.exit(res?0:1);
 		
 	}
 

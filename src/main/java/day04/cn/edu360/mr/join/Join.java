@@ -1,5 +1,8 @@
 package day04.cn.edu360.mr.join;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -12,9 +15,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 /**
  * 用mr实现sql中的join模型
  * @author hunter.d
@@ -25,7 +25,7 @@ public class Join {
 	
 	public static class JoinMapper extends Mapper<LongWritable, Text, Text, JoinBean>{
 		@Override
-		protected void map(LongWritable key, Text value, Context context)
+		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, JoinBean>.Context context)
 				throws IOException, InterruptedException {
 			// 获取任务切片信息
 			FileSplit inputSplit = (FileSplit) context.getInputSplit();
@@ -52,7 +52,7 @@ public class Join {
 		
 		@Override
 		protected void reduce(Text key, Iterable<JoinBean> values,
-				Context context) throws IOException, InterruptedException {
+				Reducer<Text, JoinBean, JoinBean, NullWritable>.Context context) throws IOException, InterruptedException {
 			ArrayList<JoinBean> orderList = new ArrayList<>();
 			JoinBean userBean = new JoinBean();
 			

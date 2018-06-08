@@ -1,10 +1,10 @@
 package day04.cn.edu360.mr.movie_topn;
 
-import org.apache.hadoop.io.WritableComparable;
-
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+
+import org.apache.hadoop.io.WritableComparable;
 
 public class MovieBean implements WritableComparable<MovieBean>{
 	

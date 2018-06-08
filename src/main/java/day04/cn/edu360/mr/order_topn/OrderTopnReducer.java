@@ -13,7 +13,7 @@ public class OrderTopnReducer extends Reducer<Text, OrderBean, OrderBean, NullWr
 	
 	@Override
 	protected void reduce(Text key, Iterable<OrderBean> values,
-			Context context) throws IOException, InterruptedException {
+			Reducer<Text, OrderBean, OrderBean, NullWritable>.Context context) throws IOException, InterruptedException {
 		
 		ArrayList<OrderBean> beans = new ArrayList<>();
 		
